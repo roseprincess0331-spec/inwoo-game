@@ -58,12 +58,27 @@ textarea.addEventListener('input', () => {
 function submitFeedback(e) {
     e.preventDefault();
 
+    const text = textarea.value;
 
-    const text = e.target.querySelector('textarea').value;
+    if (!text.trim()) {
+        alert("내용을 입력해주세요!");
+        return;
+    }
 
+    // --- EmailJS 전송 부분 ---
+    // 'YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID'
+    const templateParams = {
+        message: text, 
+    };
 
-    alert('피드백 감사합니다 💖\n\n"' + text + '"');
-
-
-    e.target.reset();
+    emailjs.send('service_urpr6ox', 'template_22rrawq', templateParams)
+        .then(function(response) {
+            // 성공했을 때 뜨는 메시지 (수정됨)
+            alert('피드백 감사합니다. 💖\n인우에게 전달되었습니다.');
+            textarea.value = ''; // 텍스트 영역 비우기
+            counter.textContent = 0; // 글자 수 초기화
+        }, function(error) {
+            console.log('FAILED...', error);
+            alert("전송에 실패했습니다. 다시 시도해주세요.");
+        });
 }
