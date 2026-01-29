@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인우 게임</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&family=Single+Day&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header id="game-header" class="hidden">
+        <h2 id="game-title">인우의 취향 맞추기</h2>
+    </header>
+
+    <section id="page-start" class="page active">
+        <img src="images/왁스봉투.png" alt="인우의 초대장 봉투" class="invite-envelope">
+        <h1>인우로부터 초대장이 도착하였습니다. </h1>
+        <p>인우 모의고사를 시작하시겠습니까?</p>
+
+        <button id="start-button" onclick="
+document.getElementById('game-header').classList.remove('hidden');
+document.getElementById('game-title').innerText='인우의 취향 맞추기';
+showPage('page-quiz-1');
+">시작하기</button>
+        <button id="leave-button" onclick="
+document.getElementById('exit-modal').classList.remove('hidden');
+">거절하기</button>
+    </section>
+
+    <section id="page-quiz-1" class="page">
+        <h3>
+            <span class="quiz-number">Q1</span>인우가 좋아하는 여행 스타일은?
+        </h3>
+        <div class="choices">
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                A. 계획 완벽한 여행
+            </button>
+            <button class="choice" onclick="showPage('page-quiz-2')" data-answer="correct">
+                B. 먹방찍으며 뒹굴거리는 여행
+            </button>
+        </div>
+    </section>
+
+    <section id="page-quiz-2" class="page">
+        <h3>
+            <span class="quiz-number">Q2</span>인우가 가장 감동받는 순간은?
+        </h3>
+        <div class="choices">
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                A. 손잡을 때
+            </button>
+            <button class="choice" onclick="showPage('page-quiz-3')" data-answer="correct">
+                B. 생각지도 못했는데 나를 생각해줄 때
+            </button>
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                C. 오마카세 사줄 때
+            </button>
+        </div>
+    </section>
+
+    <section id="page-quiz-3" class="page">
+        <h3>
+            <span class="quiz-number">Q3</span>인우의 구글 아이디 뜻은?
+        </h3>
+        <div class="choices">
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                A. 백설공주
+            </button>
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                B. 얼음왕자
+            </button>
+            <button class="choice" onclick="showPage('page-quiz-4')" data-answer="correct">
+                C. 장미공주
+            </button>
+        </div>
+    </section>
+
+    <section id="page-quiz-4" class="page">
+        <h3>
+            <span class="quiz-number">Q4</span>인우의 발사이즈는?
+        </h3>
+        <div class="choices">
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                A. 225
+            </button>
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                B. 230
+            </button>
+            <button class="choice" onclick="showPage('page-quiz-5')" data-answer="correct">
+                C. 235
+            </button>
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                D. 240
+            </button>
+        </div>
+    </section>
+
+    <section id="page-quiz-5" class="page">
+        <h3>
+            <span class="quiz-number">Q5</span>인우는 햄버거를 최대 몇 개까지 먹어봤을까요?
+        </h3>
+        <div class="choices">
+            <button class="choice" onclick="showPage('page-success')" data-answer="correct">
+                A. 1개
+            </button>
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                B. 2개
+            </button>
+            <button class="choice" onclick="showPage('page-fail')" data-answer="wrong">
+                C. 3개 이상
+            </button>
+        </div>
+    </section>
+
+    <section id="page-fail" class="page">
+        <h3>
+            게임 실패
+        </h3>
+        <p>
+            당신은 게임에서 실패하였습니다.<br>
+            전부 맞출 때까지 다시 도전하셔야 합니다.
+        </p>
+        <button onclick="showPage('page-start')">
+            다시 도전하기
+        </button>
+    </section>
+
+    <section id="page-success" class="page">
+        <h3>
+            미션 성공
+        </h3>
+        <p>
+            축하합니다. <br>
+            당신은 인우의 첫 개발 웹을 경험하셨습니다.🎉 <br>
+            인우에게 하고 싶은 말을 남겨주세요.
+        </p>
+        <form class="feedback-form" onsubmit="submitFeedback(event)">
+            <textarea placeholder="인우에게 하고 싶은 말을 적어주세요" maxlength="300" required></textarea>
+            <div class="char-count">
+                <span id="current-count">0</span> / 300
+            </div>
+            <button type="submit" class="submit">피드백 남기기</button>
+        </form>
+    </section>
+    <div id="exit-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>잠깐!</h2>
+            <p>
+                나가시려구요?<br>
+                에이 그렇겐 안되죠.
+            </p>
+            <button id="exit-ok-button" onclick="
+document.getElementById('exit-modal').classList.add('hidden');
+document.getElementById('game-header').classList.remove('hidden');
+document.getElementById('game-title').innerText='인우의 취향 맞추기';
+showPage('page-quiz-1');
+">확인</button>
+        </div>
+    </div>
+    <footer class="game-footer">
+        <p>made by Inwoo</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
